@@ -7,6 +7,7 @@
 //
 
 #import "XSearchViewController.h"
+#import "UIButton+imageAndTitle.h"
 
 @interface XSearchViewController ()
 
@@ -23,21 +24,35 @@
     return self;
 }
 
-- (void)loadView
-{
-    self.view = [[UIView alloc] initWithFrame:CGRectMake(44, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
     self.title = @"找片";
+    self.view.backgroundColor = [UIColor whiteColor];
     
+    [self searchViewLayout];
+    [self socializeViewLayout];
+}
+
+- (void)searchViewLayout
+{
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
+    searchBar.tintColor = [UIColor whiteColor];
     searchBar.placeholder = @"搜索视频，导演，演员...";
     [self.view addSubview:searchBar];
+}
+
+- (void)socializeViewLayout
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, 100)];
+    [self.view addSubview:view];
+    
+    UIButton *shakeButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 15, 80, 80)];
+    shakeButton.backgroundColor = [UIColor redColor];
+    [shakeButton setImage:[UIImage imageNamed:@"rc_shake_btn"] withTitle:@"摇一摇" forState:UIControlStateNormal];
+    [view addSubview:shakeButton];
 }
 
 - (void)didReceiveMemoryWarning

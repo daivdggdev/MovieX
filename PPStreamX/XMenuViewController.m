@@ -14,18 +14,15 @@
 
 
 @interface XMenuViewController () <IIViewDeckControllerDelegate>
-
-- (IIViewDeckController*)topViewDeckController;
+{
+    NSUInteger currentMenuSelected;
+}
 
 @end
 
 
 @implementation XMenuViewController
 
-- (IIViewDeckController*)topViewDeckController
-{
-    return self.viewDeckController.viewDeckController;
-}
 
 + (id)shareMenuViewController
 {
@@ -49,6 +46,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    currentMenuSelected = 0;
     self.view.backgroundColor = [UIColor grayColor];
     
     NSArray *nameArray = @[@"首页", @"找片", @"爱频道", @"我的", @"下载", @"游戏"];
@@ -61,7 +59,7 @@
     {
         y = i * height;
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(x, y, width, height)];
-        button.backgroundColor = [UIColor redColor];
+        button.backgroundColor = [UIColor blackColor];
         [button setTitle:[nameArray objectAtIndex:i] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(menuSelected:) forControlEvents:UIControlEventTouchUpInside];
@@ -74,7 +72,11 @@
 - (void)menuSelected:(id)sender
 {
     UIButton *button = (UIButton*)sender;
-    switch (button.tag - 10000)
+    if (currentMenuSelected == button.tag - 10000)
+        return;
+    
+    currentMenuSelected = button.tag - 10000;
+    switch (currentMenuSelected)
     {
         // 首页
         case 0:
@@ -93,6 +95,8 @@
 
 - (void)navigateToHome
 {
+    UINavigationController *navigate = (UINavigationController*)self.viewDeckController.centerController;
+    [navigate popToRootViewControllerAnimated:NO];
 }
 
 - (void)navigateToSearch
@@ -100,7 +104,8 @@
     NSLog(@"navigateToSearch");
     
     XSearchViewController *searchViewController = [[XSearchViewController alloc] init];
-    [self.viewDeckController.centerController presentViewController:searchViewController animated:NO completion:nil];
+    UINavigationController *navigate = (UINavigationController*)self.viewDeckController.centerController;
+    [navigate pushViewController:searchViewController animated:NO];
 }
 
 - (void)navigateToIpd

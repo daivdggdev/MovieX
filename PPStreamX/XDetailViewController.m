@@ -255,7 +255,7 @@
     
     if (player.playbackState != MPMoviePlaybackStateStopped)
     {
-        stop_ems_task([currentPlayUrl UTF8String]);
+        //stop_ems_task([currentPlayUrl UTF8String]);
     }
     
     [self.navigationController popViewControllerAnimated:YES];

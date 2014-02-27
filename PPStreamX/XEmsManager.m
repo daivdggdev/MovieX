@@ -7,7 +7,7 @@
 //
 
 #import "XEmsManager.h"
-#import "ems_server.h"
+//#import "ems_server.h"
 #import "pps.h"
 
 NSString * const XEmsManagerVodBufferingEventNotification = @"ems_buffering";
@@ -40,7 +40,7 @@ int32 ems_event_listenerx(int32 index, ems_event event)
 
 + (void)startEmsServer
 {
-    start_ems_server("IOS", "iPad1G", "ppstream1", 8080);
+    //start_ems_server("IOS", "iPad1G", "ppstream1", 8080);
     //ems_event_listener_func(ems_event_listenerx);
 }
 
@@ -56,7 +56,7 @@ int32 ems_event_listenerx(int32 index, ems_event event)
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //add_ems_url("pps://plsgkogqec3t2x2s2aqdzu6sgdica.pps/iqiyi/h/h27jxllysqipd4fraabfxrao2pgctett.pfv?fid=H27JXLLYSQIPD4FRAABFXRAO2PGCTETT&qa=http://cache.video.qiyi.com/vd/218943300/97b6663fac1900db569ad867bc990f30/", NULL);
-        add_ems_url([url UTF8String], [userID UTF8String]);
+        //add_ems_url([url UTF8String], [userID UTF8String]);
     });
     
     return 0;

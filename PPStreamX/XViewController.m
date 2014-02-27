@@ -15,6 +15,9 @@
 #import "XChanneViewController.h"
 #import "RefreshView.h"
 #import "XDetailViewController.h"
+#import "XSearchViewController.h"
+#import "XHomeToolsViewController.h"
+#import "FPPopoverController.h"
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,7 +56,7 @@
 #endif  // #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
     
     self.title = @"PPSX";
-
+    
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     
     [self initializeX];
@@ -61,6 +64,18 @@
 
 - (void)initializeX
 {
+    // more menu
+#if 0
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ipad_detail_menum_list_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(doShowMoreMenu:)];
+    barButton.width = 44;
+    self.navigationItem.rightBarButtonItem = barButton;
+#else
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 44, 0, 44, 44)];
+    [button setImage:[UIImage imageNamed:@"ipad_detail_menum_list_icon"] forState:UIControlStateNormal];
+    button.showsTouchWhenHighlighted = YES;
+    [self.navigationController.navigationBar addSubview:button];
+#endif
+    
     // custom table view
     [self tableViewCustom];
     
@@ -113,6 +128,18 @@
     frame.origin.x = frame.size.width * pageControl.currentPage;
     frame.origin.y = 0;
     [topScrollView scrollRectToVisible:frame animated:YES];
+}
+
+#pragma mark - More Menu
+- (void)doShowMoreMenu:(id)sender
+{
+    XHomeToolsViewController *toolViewController = [[XHomeToolsViewController alloc] init];
+    
+    FPPopoverController *popover = [[FPPopoverController alloc] initWithViewController:toolViewController];
+    popover.contentSize = CGSizeMake(88, 44);
+    popover.border = NO;
+    popover.tint = FPPopoverWhiteTint;
+    [popover presentPopoverFromPoint:CGPointMake(SCREEN_WIDTH - 44, 30)];
 }
 
 #pragma mark - Top Slider 
